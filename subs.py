@@ -1,3 +1,4 @@
+from tkinter import X
 import undetected_chromedriver as uc
 import time
 from selenium import webdriver
@@ -61,6 +62,8 @@ def subs(data):
             pass
         sleep(8)
         browser.get(input_link)
+        sleep(1)
+        browser.get(input_link)
         xpath_el('//tp-yt-paper-button[@class="style-scope ytd-subscribe-button-renderer"]')
         sleep(3)
         notifier = wait(browser,3).until(EC.presence_of_element_located((By.XPATH, f'//yt-formatted-string[@class="style-scope ytd-subscribe-button-renderer"]'))).text
@@ -68,7 +71,7 @@ def subs(data):
         sleep(5)
         browser.quit()
     except Exception as e:
-        print(e)
+ 
         try:
             browser.quit()
         except:
