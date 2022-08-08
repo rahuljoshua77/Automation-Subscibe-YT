@@ -1,4 +1,3 @@
-from tkinter import X
 import undetected_chromedriver as uc
 import time
 from selenium import webdriver
@@ -18,25 +17,10 @@ opts = uc.ChromeOptions()
 
  
 opts.headless = False
-opts.add_argument('--log-level=3') 
-opts.add_argument('--no-sandbox')
-opts.add_argument('--disable-setuid-sandbox')
-opts.add_argument('--disable-infobars')
-opts.add_argument('--ignore-certifcate-errors')
-opts.add_argument('--ignore-certifcate-errors-spki-list')
-opts.add_argument("--incognito")
-opts.add_argument('--no-first-run')
-opts.add_argument('--disable-dev-shm-usage')
-opts.add_argument("--disable-infobars")
-opts.add_argument("--disable-extensions")
-opts.add_argument("--disable-popup-blocking")
-opts.add_argument('--log-level=3') 
  
-opts.add_argument('--ignore-ssl-errors=yes')
-opts.add_argument("--start-maximized")
-#opts.add_argument("window-size=200,100")
-opts.add_argument('--ignore-certificate-errors')
-opts.add_argument('--disable-blink-features=AutomationControlled')
+ 
+opts.add_argument("--disable-popup-blocking")
+ 
  
  
 def xpath_type(el,mount):
@@ -51,11 +35,18 @@ def xpath_el(el):
  
     
 def subs(data):
+    
     try:
         email = input_email.split("@")[0]+str(data)+"@"+input_email.split("@")[1]
         password = input_password
         global browser
+        opts = uc.ChromeOptions()
+
+ 
+        opts.headless = False
         
+        
+        opts.add_argument("--disable-popup-blocking")
         browser = uc.Chrome(options=opts,driver_executable_path=f"{cwd}//chromedriver.exe")
         browser.get(input_link)
         browser.get(wait(browser,15).until(EC.presence_of_element_located((By.XPATH, f'//a[contains(@href,"https://accounts.google.com/ServiceLogin?")]'))).get_attribute("href"))
@@ -77,7 +68,7 @@ def subs(data):
         sleep(5)
         browser.quit()
     except Exception as e:
-        
+        print(e)
         try:
             browser.quit()
         except:
@@ -95,8 +86,9 @@ if __name__ == '__main__':
     check_much = input("[*] End to: ")
     total =  [x for x in range(start,int(check_much))]
     start = time.time()
-     
+   
     for i in total: 
+        
         subs(i)
             
     end = time.time()
